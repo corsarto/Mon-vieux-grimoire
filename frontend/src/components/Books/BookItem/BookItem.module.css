@@ -26,6 +26,7 @@
 .BookImage {
     width: 206px;
     height: 260px;
+    display: block;
     object-position: center;
     object-fit: contain;
 }
