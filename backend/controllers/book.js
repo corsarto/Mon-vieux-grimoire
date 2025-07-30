@@ -3,7 +3,6 @@ const fs = require('fs');
 const sharp = require('sharp');
 const path = require('path');
 
-
 exports.createBooks = async (req, res, next) => {
     try {
     const bookObject = JSON.parse(req.body.book);
@@ -96,18 +95,21 @@ exports.deleteBook = (req, res, next) => {
 
 exports.ratingBooks = (req, res, next) => {
     const rating = req.body.rating;
-
+    const validRating = rating >= 0 && rating <= 5;
     Book.findOne({ _id: req.params.id })
         .then(book => {
             const userRating = book.ratings.find(e => e.userId === req.auth.userId);
             if (userRating) {
                 userRating.grade = rating;
-            } else {
+            } if (validRating && !userRating) {
                 book.ratings.push({ userId: req.auth.userId, grade: rating });
             }
-        book.save()
-            .then(() => res.status(200).json(book))
-            .catch(error => res.status(401).json({ error }));
-    })
+            const averageRating = book.ratings.reduce(( acc, val) => acc + val.grade, 0);
+            book.averageRating = (averageRating / book.ratings.length).toFixed(1);
+            book.save()
+                .then(() => res.status(200).json(book))
+                .catch(error => res.status(401).json({ error }));
+        })
         .catch(error => res.status(400).json({ error }));
+    
 };
