@@ -15,6 +15,7 @@ exports.createBooks = async (req, res, next) => {
 
     await sharp(inputPath)
         .resize({ width: 206, height: 260, fit: 'cover'})
+        .webp({ quality: 100 })
         .toFile(outputPath);
 
     fs.unlinkSync(inputPath);
