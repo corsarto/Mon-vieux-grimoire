@@ -3,8 +3,12 @@ const userRoutes = require('./routes/user');
 const mongoose = require('mongoose');
 const booksRoutes= require('./routes/book');
 const path = require('path');
+require('dotenv').config();
 
-mongoose.connect('mongodb+srv://clercloic3:ELNUcvXSWzlaWg5f@cluster0.7kwhtfh.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0',)
+const username = process.env.DB_USERNAME;
+const password = process.env.DB_PASSWORD;
+
+mongoose.connect(`mongodb+srv://${username}:${password}.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`,)
     .then(() => console.log('Connexion à MongoDB réussie !'))
     .catch(() => console.log('Connexion à MongoDB échouée !'));
 
