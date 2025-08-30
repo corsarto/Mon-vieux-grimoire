@@ -8,7 +8,7 @@ require('dotenv').config();
 const username = process.env.DB_USERNAME;
 const password = process.env.DB_PASSWORD;
 
-mongoose.connect(`mongodb+srv://${username}:${password}.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`,)
+mongoose.connect(`mongodb+srv://${username}:${password}@cluster0.7kwhtfh.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`,)
     .then(() => console.log('Connexion à MongoDB réussie !'))
     .catch(() => console.log('Connexion à MongoDB échouée !'));
 
